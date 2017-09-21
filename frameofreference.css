@@ -1,1 +1,46 @@
-
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+*:focus {
+	outline: 0;
+}
+line, text, tspan {
+	pointer-events: none;
+}
+button {
+	background: none;
+	border: 3px solid black;
+	cursor: pointer;
+	padding: 10px;
+	border-radius: 10px;
+	display: block;
+	margin-bottom: 10px;
+	font-family: "Open Sans", sans-serif;
+	color: #000;
+}
+button[disabled] {
+	color: #000;
+	background-color: #ccc;
+	cursor: no-drop;
+}
+.inlinebutton {
+	display: inline;
+	margin-right: 10px;
+}
+#buttondiv {
+	position: absolute;
+	left: 1100px;
+	top: 100px;
+}
+p {
+	font-family: "Open Sans", sans-serif;
+	font-size: 20px;
+}
+.hidden {
+	visibility: hidden;
+}
