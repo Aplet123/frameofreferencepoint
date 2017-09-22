@@ -28,18 +28,27 @@ function updateValues() {
 		vals.rpy = vals.c2y;
 	}
 	$("#referencepoint").attr("transform", "translate(" + vals.rpx + "," + vals.rpy + ")");
+	$("#coordinategrid").attr("transform", "translate(" + vals.rpx + "," + vals.rpy + ")");
 	$("#car1").attr("transform", "translate(" + vals.c1x + "," + vals.c1y + ")");
 	$("#car2").attr("transform", "translate(" + vals.c2x + "," + vals.c2y + ")");
 	$("#car1connect").attr("x1", vals.rpx);
 	$("#car1connect").attr("y1", vals.rpy);
 	$("#car2connect").attr("x1", vals.rpx);
 	$("#car2connect").attr("y1", vals.rpy);
-	$("#car1connect").attr("x2", vals.c1x);
+	$("#car1connect").attr("x2", vals.rpx);
 	$("#car1connect").attr("y2", vals.c1y);
-	$("#car2connect").attr("x2", vals.c2x);
+	$("#car2connect").attr("x2", vals.rpx);
 	$("#car2connect").attr("y2", vals.c2y);
-	$("#car1distance").text(Math.round(Math.sqrt(Math.pow(vals.rpx - vals.c1x, 2) + Math.pow(vals.rpy - vals.c1y, 2)) / 10));
-	$("#car2distance").text(Math.round(Math.sqrt(Math.pow(vals.rpx - vals.c2x, 2) + Math.pow(vals.rpy - vals.c2y, 2)) / 10));
+	$("#car1connecta").attr("x1", vals.rpx);
+	$("#car1connecta").attr("y1", vals.c1y);
+	$("#car2connecta").attr("x1", vals.rpx);
+	$("#car2connecta").attr("y1", vals.c2y);
+	$("#car1connecta").attr("x2", vals.c1x);
+	$("#car1connecta").attr("y2", vals.c1y);
+	$("#car2connecta").attr("x2", vals.c2x);
+	$("#car2connecta").attr("y2", vals.c2y);
+	$("#car1distance").text(Math.round(Math.abs(vals.c1x - vals.rpx) / 10));
+	$("#car2distance").text(Math.round(Math.abs(vals.c2x - vals.rpx) / 10));
 	if (vals.tep == 0) {
 		$("#elapsedp").addClass("hidden");
 	} else {
@@ -67,19 +76,18 @@ $("[id^=snapcar]").click(function () {
 	updateValues();
 });
 $("#gobutton").click(function () {
-	vals.gnt = setInterval(function () {
-		vals.c1x += 2;
-		vals.c2x += 1;
-		vals.tep += 20;
-		updateValues();
-	}, 20);
-	$("#stopbutton").attr("disabled", false);
-	this.disabled = true;
-});
-$("#stopbutton").click(function () {
-	clearInterval(vals.gnt);
-	$("#gobutton").attr("disabled", false);
-	this.disabled = true;
+	if (this.innerText.match(/^Start/)) {
+		vals.gnt = setInterval(function () {
+			vals.c1x += 2;
+			vals.c2x += 1;
+			vals.tep += 20;
+			updateValues();
+		}, 20);
+		this.innerText = this.innerText.replace(/^Start/, "Stop");
+	} else if (this.innerText.match(/^Stop/)) {
+		clearInterval(vals.gnt);
+		this.innerText = this.innerText.replace(/^Stop/, "Start");
+	}
 });
 $("#resetbutton").click(function () {
 	Object.assign(vals, startVals);
@@ -87,4 +95,20 @@ $("#resetbutton").click(function () {
 	$("#snapcarnone").attr("disabled", true);
 	updateValues();
 });
+$("#coordgrid").click(function () {
+	if (this.innerText.match(/^Hide/)) {
+		$("#coordinategrid").addClass("hidden");
+		this.innerText = this.innerText.replace(/^Hide/, "Show");
+	} else if (this.innerText.match(/^Show/)) {
+		$("#coordinategrid").removeClass("hidden");
+		this.innerText = this.innerText.replace(/^Show/, "Hide");
+	}
+});
+var cg = $("#coordinategrid")[0];
+for (var xval = -1000; xval <= 1000; xval += 20) {
+	cg.insertAdjacentHTML("beforeend", '<line x1="' + xval + '" y1="-550" x2="' + xval + '" y2="550" stroke-width="2px" stroke="' + (xval % 100 ? "#ddf" : "#aaf") + '" stroke-dasharray="4"/>');
+}
+for (var yval = -560; yval <= 560; yval += 20) {
+	cg.insertAdjacentHTML("beforeend", '<line x1="-1000" y1="' + yval + '" x2="1000" y2="' + yval + '" stroke-width="2px" stroke="' + (yval % 100 ? "#ddf" : "#aaf") + '" stroke-dasharray="4"/>');
+}
 updateValues();

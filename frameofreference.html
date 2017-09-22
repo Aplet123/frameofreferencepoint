@@ -9,11 +9,14 @@
   </head>
   <body>
     <svg id="cars" width="1000" height="550" draggable="false">
+    	<g id="coordinategrid"></g>
     	<line x1="0" y1="100" x2="1000" y2="100" stroke-width="10px" stroke="#000"/>
     	<line x1="0" y1="500" x2="1000" y2="500" stroke-width="10px" stroke="#000"/>
     	<line x1="0" y1="300" x2="1000" y2="300" stroke-width="10px" stroke="#000" stroke-dasharray="5"/>
     	<line id="car1connect" x1="105" y1="55" x2="150" y2="200" stroke-width="3px" stroke="#000" />
     	<line id="car2connect" x1="105" y1="55" x2="150" y2="400" stroke-width="3px" stroke="#000" />
+    	<line id="car1connecta" x1="105" y1="55" x2="150" y2="200" stroke-width="3px" stroke="#000" />
+    	<line id="car2connecta" x1="105" y1="55" x2="150" y2="400" stroke-width="3px" stroke="#000" />
     	<g id="car1" transform="translate(150, 200)">
     		<ellipse cx="0" cy="0" rx="100" ry="50" fill="#f00" stroke-width="3px" stroke="#000"/>
     		<text x="-33" y="-30" font-family="Open Sans"><tspan dy="0.6em">Distance:</tspan><tspan id="car1distance" dy="3em" x="-13">5</tspan>m</text>
@@ -30,12 +33,12 @@
     	</g>
     </svg>
     <div id="buttondiv">
-    	<button id="gobutton" class="inlinebutton">Go</button>
-    	<button id="stopbutton" class="inlinebutton" disabled>Stop</button>
+    	<button id="gobutton" class="inlinebutton">Start Cars</button>
     	<button id="resetbutton" class="inlinebutton">Reset</button>
     	<button id="snapcar1">Point of Reference on Car 1</button>
     	<button id="snapcar2">Point of Reference on Car 2</button>
     	<button id="snapcarnone" disabled>Free Point of Reference</button>
+    	<button id="coordgrid">Hide Coordinate Grid</button>
     	<p id="elapsedp" class="hidden">Time elapsed: <span id="elapsed">0</span> seconds</p>
     </div>
     <script src="frameofreference.js"></script>  
