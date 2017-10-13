@@ -70,7 +70,7 @@ $("#cars").mousemove(function(e) {
 	}
 });
 $("[id^=snapcar]").click(function () {
-	vals.rps = this.id.substr(4, 4);
+	vals.rps = this.id.substr(4);
 	$("[id^=snapcar]").attr("disabled", false);
 	this.disabled = true;
 	updateValues();
